@@ -78,6 +78,7 @@ namespace CompaniesAPI.Services
             company.Address.Neighborhood= contract.Address.Neighborhood;
             company.Address.City= contract.Address.City;
             company.Address.Complement = contract.Address.Complement;
+            company.Address.State= contract.Address.State;
         }
     }
 }
