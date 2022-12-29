@@ -3,6 +3,7 @@ using CompaniesAPI.Infra.Repositories;
 using CompaniesAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var MyAllowSpecificOrigins = "strict-origin-when-cross-origin";
 var builder = WebApplication.CreateBuilder(args);
@@ -27,15 +28,16 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo{ Title = "Companies API", Version = "v1" } );
 });
 
-builder.Services.AddDbContext<ApplicationDbContext>(
+/*builder.Services.AddDbContext<ApplicationDbContext>(
     opt => opt.UseInMemoryDatabase("CompaniesAPI"),
     ServiceLifetime.Scoped,
     ServiceLifetime.Scoped
-);
-
-/*builder.Services.AddDbContext<ApplicationDbContext>(
-    opt => opt.UseSqlServer("Data Source=localhost;Initial Catalog=rafael;User ID=sa;Password=1q2w3e4r@#$;TrustServerCertificate=True")
 );*/
+
+var strCon = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(
+    opt => opt.UseSqlServer(strCon)
+);
 
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
