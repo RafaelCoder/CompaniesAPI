@@ -28,16 +28,16 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo{ Title = "Companies API", Version = "v1" } );
 });
 
-/*builder.Services.AddDbContext<ApplicationDbContext>(
+builder.Services.AddDbContext<ApplicationDbContext>(
     opt => opt.UseInMemoryDatabase("CompaniesAPI"),
     ServiceLifetime.Scoped,
     ServiceLifetime.Scoped
-);*/
+);
 
-var strCon = builder.Configuration.GetConnectionString("DefaultConnection");
+/*var strCon = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(
     opt => opt.UseSqlServer(strCon)
-);
+);*/
 
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
